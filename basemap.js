@@ -51,12 +51,22 @@ let myMapControl = L.control.layers({  // http://leafletjs.com/reference-1.3.0.h
 	"Basemap.at (highdpi)" : myLayers.bmaphidpi,
     "Orthophoto 30cm" : myLayers.bmaporthofoto30cm,    
     
-},{"Basemap overlay" : myLayers.bmapoverlay
-});
-
-myMap.addControl (myMapControl);
-
-
-myMap.setView([47.267,11.383], 11);
+},{"Basemap overlay" : myLayers.bmapoverlay,
+},
+{collapsed:false  // http://leafletjs.com/reference-1.3.0.html#control-layers-collapsed
+}
+);
 
 
+
+myMap.addControl (myMapControl); // http://leafletjs.com/reference-1.3.0.html#map-addcontrol
+
+
+myMap.setView([47.267,11.383], 11); // http://leafletjs.com/reference-1.3.0.html#map-setview
+
+L.control.scale( // http://leafletjs.com/reference-1.3.0.html#control-scale-l-control-scale
+{imperial: false, // http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
+maxWidth:200 // http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
+}
+// metrische Angaben anzeigen sowie Position unten links ensprechen den defaults
+).addTo(myMap); 
