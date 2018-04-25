@@ -68,5 +68,23 @@ L.control.scale( // http://leafletjs.com/reference-1.3.0.html#control-scale-l-co
 {imperial: false, // http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
 maxWidth:200 // http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
 }
-// metrische Angaben anzeigen sowie Position unten links ensprechen den defaults
+
 ).addTo(myMap); 
+
+const uni = [47.264,11.385]; 
+const usi = [47.257,11.356]; 
+const technik = [47.263,11.348]; 
+const markeroptions = {
+    title: "Uni IBK",
+    opacity: 0.5,
+    draggable: true
+};
+
+L.marker(uni, markeroptions).addTo(myMap);
+
+L.marker(usi, markeroptions).addTo(myMap);
+
+L.marker(technik, markeroptions).addTo(myMap);
+
+
+myMap.setView(uni, 13);
