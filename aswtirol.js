@@ -37,7 +37,7 @@ let myMapControl = L.control.layers({  // http://leafletjs.com/reference-1.3.0.h
 	"Orthophoto" : myLayers.bmaporthofoto30cm
    
     
-},{"Basemap overlay" : myLayers.bmapoverlay,
+},{
     "Marker": markerGroup
 },
 {collapsed:false  // http://leafletjs.com/reference-1.3.0.html#control-layers-collapsed
@@ -71,11 +71,6 @@ const iglsCoords = [47.2308, 11.4089];
 
 myMap.addLayer(markerGroup);
 
-const markeroptions = {
-    title: "Uni IBK",
-    opacity: 0.5,
-    draggable: true
-};
 
 let awsdata = [
 {"lat":"47.387131","lng":"11.133717","name":"Gehrenspitze","temperatur":"0.6","datum":"2018-04-26T08:00:00+02:00","link":"https://lawine.tirol.gv.at/data/grafiken/540/standard/dreitage/puitegg.png"},
@@ -115,12 +110,9 @@ let awsdata = [
 
 for (const entry of awsdata) {
     const latlng = [entry.lat, entry.lng]
-    L.marker(latlng, markeroptions).addTo(markerGroup).bindPopup(`<p> Name: ${entry.name} </p> <p> Temperatur: ${entry.temperatur} °C  </p> <p> Datum: ${entry.datum}  </p> <a href="${entry.link}">Grafik</a>`)
+    L.marker(latlng).addTo(markerGroup).bindPopup(`<p> Name: ${entry.name} </p> <p> Temperatur: ${entry.temperatur} °C  </p> <p> Datum: ${entry.datum}  </p> <a href="${entry.link}">Grafik</a>`)
 }
 
-
-let patscherkoflMarker = L.marker(patscherkofel).addTo(markerGroup);
-patscherkoflMarker.bindPopup("<p> Patscherkofel</p><img style= 'width:200px' src='https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Luftbild_Patscherkofel.jpg/1024px-Luftbild_Patscherkofel.jpg' alt='Patscherkofl'/>")
 
 
 
