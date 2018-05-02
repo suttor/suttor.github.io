@@ -1,5 +1,5 @@
 
-let myMap = L.map("mapdiv"); // http://leafletjs.com/reference-1.3.0.html#map-l-map
+let myMap = L.map("mapdiv");    // http://leafletjs.com/reference-1.3.0.html#map-l-map
 const wienGroup = L.featureGroup();
 myLayers = {    
     osm : L.tileLayer ( // http://leafletjs.com/reference-1.3.0.html#tilelayer-l-tilelayer
@@ -60,11 +60,12 @@ let myMapControl = L.control.layers({  // http://leafletjs.com/reference-1.3.0.h
 );
 
 
-
 myMap.addControl (myMapControl); // http://leafletjs.com/reference-1.3.0.html#map-addcontrol
 
 
 myMap.setView([47.267,11.383], 11); // http://leafletjs.com/reference-1.3.0.html#map-setview
+
+
 
 L.control.scale( // http://leafletjs.com/reference-1.3.0.html#control-scale-l-control-scale
 {imperial: false, // http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
@@ -73,18 +74,55 @@ maxWidth:200 // http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
 // metrische Angaben anzeigen sowie Position unten links ensprechen den defaults
 ).addTo(myMap); 
 
-// console.log("Stationen: ", stationen);
+
+
+
+async function addGeojson(url) {
+    
+    const response = await fetch(url);
+    
+    const wiendata = await response.json()
+    
+    const geojson = L.geoJSON(wiendata, {
+        style: function(feature) {
+            return {color: "#ff0000"};
+                    },
+            pointToLayer: function(geoJsonPoint, latlng){
+                return L.marker(latlng, {
+               icon: L.icon({
+                    iconUrl: "icon_grafik.png"
+                })
+           });
+       }
+    });
+    wienGroup.addLayer(geojson);
+    myMap.fitBounds(wienGroup.getBounds())
+}
+
+
+
+
+const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&srsName=EPSG:4326&outputFormat=json&typeName=ogdwien:SPAZIERPUNKTOGD,ogdwien:SPAZIERLINIEOGD"
+
+addGeojson(url);
 
 myMap.addLayer(wienGroup);
-let geojson = L.geoJSON(spaziergang).addTo(wienGroup);
-geojson.bindPopup(function(layer) {
-       
-    const props = layer.feature.properties;
-    const popupText = `<h1>${props.NAME}</h1>
-    <p>${props.BEMERKUNG}</p>`;
-    return popupText;
-      });
 
-myMap.fitBounds(wienGroup.getBounds());
+// myMap.fitBounds(wienGroup.getBounds());
+
+
+
+
+
+// let geojson = L.geoJSON(spaziergang).addTo(wienGroup);
+// geojson.bindPopup(function(layer) {
+       
+//     const props = layer.feature.properties;
+//     const popupText = `<h1>${props.NAME}</h1>
+//     <p>${props.BEMERKUNG}</p>`;
+//     return popupText;
+//       });
+
+// myMap.fitBounds(wienGroup.getBounds());
 
 
