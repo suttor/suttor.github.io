@@ -99,7 +99,7 @@ async function addGeojson(url) {
     myMap.fitBounds(wienGroup.getBounds())
 }
 
-
+// Icons made by http://www.freepik.com 
 
 
 const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:CITYBIKEOGD&srsName=EPSG:4326&outputFormat=json"
