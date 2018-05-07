@@ -95,6 +95,15 @@ async function addGeojson(url) {
            });
        }
     });
+	
+	geojson.bindPopup(function(layer) {
+       
+     const props = layer.feature.properties;
+     const popupText = `<h2>${props.STATION}</h1>`
+          return popupText;
+       });
+	
+	
     wienGroup.addLayer(geojson);
     myMap.fitBounds(wienGroup.getBounds())
 }
