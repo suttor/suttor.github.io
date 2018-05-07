@@ -53,7 +53,7 @@ let myMapControl = L.control.layers({  // http://leafletjs.com/reference-1.3.0.h
     "Orthophoto 30cm" : myLayers.bmaporthofoto30cm,    
     
 },{"Basemap overlay" : myLayers.bmapoverlay,
-    "Spaziergang" :  wienGroup
+    "Sehenswürdigkeiten" :  wienGroup
 },
 {collapsed:false  // http://leafletjs.com/reference-1.3.0.html#control-layers-collapsed
 }
