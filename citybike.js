@@ -90,7 +90,7 @@ async function addGeojson(url) {
             pointToLayer: function(geoJsonPoint, latlng){
                 return L.marker(latlng, {
                icon: L.icon({
-                    iconUrl: "icon_grafik.png"
+                    iconUrl: "citybike_icon.png"
                 })
            });
        }
