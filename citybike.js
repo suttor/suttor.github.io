@@ -1,6 +1,6 @@
 
 let myMap = L.map("mapdiv");    // http://leafletjs.com/reference-1.3.0.html#map-l-map
-const wienGroup = L.featureGroup();
+const wienGroup = L.markerClusterGroup();
 myLayers = {    
     osm : L.tileLayer ( // http://leafletjs.com/reference-1.3.0.html#tilelayer-l-tilelayer
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -46,13 +46,13 @@ myLayers = {
 myMap.addLayer(myLayers.geolandbasemap); // http://leafletjs.com/reference-1.3.0.html#map-addlayer
 
 let myMapControl = L.control.layers({  // http://leafletjs.com/reference-1.3.0.html#control-layers-l-control-layers
-    "Openstreetmap" : myLayers.osm,
+  //  "Openstreetmap" : myLayers.osm,
     "Basemap.at" : myLayers.geolandbasemap,
-    "Basemap.at (Grau)" : myLayers.bmapgrau,
-	"Basemap.at (highdpi)" : myLayers.bmaphidpi,
+  //  "Basemap.at (Grau)" : myLayers.bmapgrau,
+//	"Basemap.at (highdpi)" : myLayers.bmaphidpi,
     "Orthophoto 30cm" : myLayers.bmaporthofoto30cm,    
     
-},{"Basemap overlay" : myLayers.bmapoverlay,
+},{ // "Basemap overlay" : myLayers.bmapoverlay,
     "City Bikes" :  wienGroup
 },
 {collapsed:false  // http://leafletjs.com/reference-1.3.0.html#control-layers-collapsed
@@ -71,7 +71,7 @@ L.control.scale( // http://leafletjs.com/reference-1.3.0.html#control-scale-l-co
 {imperial: false, // http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
 maxWidth:200 // http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
 }
-// metrische Angaben anzeigen sowie Position unten links ensprechen den defaults
+
 ).addTo(myMap); 
 
 
@@ -95,18 +95,29 @@ async function addGeojson(url) {
            });
        }
     });
-	
+    
+    
+
+
+
 	geojson.bindPopup(function(layer) {
        
      const props = layer.feature.properties;
      const popupText = `<h2>${props.STATION}</h1>`
           return popupText;
        });
-	
+    
+       
 	
     wienGroup.addLayer(geojson);
     myMap.fitBounds(wienGroup.getBounds())
+
+    const hash = new L.Hash(myMap);
 }
+
+
+
+
 
 // Icons made by http://www.freepik.com 
 
