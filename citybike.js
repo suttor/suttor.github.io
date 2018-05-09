@@ -75,8 +75,6 @@ maxWidth:200 // http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
 ).addTo(myMap); 
 
 
-
-
 async function addGeojson(url) {
     
     const response = await fetch(url);
@@ -96,9 +94,7 @@ async function addGeojson(url) {
        }
     });
     
-    
-
-
+ 
 
 	geojson.bindPopup(function(layer) {
        
@@ -113,13 +109,12 @@ async function addGeojson(url) {
     myMap.fitBounds(wienGroup.getBounds())
 
     const hash = new L.Hash(myMap);
+    myMap.addControl( new L.Control.Search({
+        layer: wienGroup,
+        propertyName: 'STATION'
+    }) );
 }
 
-
-
-
-
-// Icons made by http://www.freepik.com 
 
 
 const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&typeName=ogdwien:CITYBIKEOGD&srsName=EPSG:4326&outputFormat=json"
@@ -129,10 +124,6 @@ addGeojson(url);
 myMap.addLayer(wienGroup);
 
 // myMap.fitBounds(wienGroup.getBounds());
-
-
-
-
 
 // let geojson = L.geoJSON(spaziergang).addTo(wienGroup);
 // geojson.bindPopup(function(layer) {
