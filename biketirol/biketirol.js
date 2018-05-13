@@ -31,6 +31,7 @@
 
 let myMap = L.map("map");    
 const BikeGroup = L.featureGroup();
+const BikeGroup_marker = L.featureGroup();
 myLayers = {    
     osm : L.tileLayer ( 
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -77,7 +78,8 @@ let myMapControl = L.control.layers({
     "Elektronische Karte Tirol Orthophoto" : myLayers.ekt_ortho,    
     
 },{
-    "Tirol Bike Trail" :  BikeGroup
+    "Route" :  BikeGroup, 
+    "Start- & Endpunkt" :  BikeGroup_marker
 },
 {collapsed:false  
 }
@@ -110,7 +112,7 @@ let geojson = L.geoJSON(etappe30).addTo(BikeGroup);
 
 myMap.addLayer(BikeGroup);
 
-// myMap.fitBounds(wienGroup.getBounds());
+
 
 
 
@@ -137,7 +139,7 @@ const finish_icon = L.icon({
       });
 
 
-L.marker([47.009528, 10.288781], {icon: finish_icon}).addTo(BikeGroup).bindPopup("...");
+L.marker([47.009528, 10.288781], {icon: start_icon}).addTo(BikeGroup_marker).bindPopup("<a href='https://de.wikipedia.org/wiki/Ischgl'>Ischgl</a>");
 
-L.marker([47.123801, 10.247665], {icon: start_icon}).addTo(BikeGroup).bindPopup("...");
+L.marker([47.123801, 10.247665], {icon: finish_icon}).addTo(BikeGroup_marker).bindPopup("<a href='https://de.wikipedia.org/wiki/St._Anton_am_Arlberg'>St. Anton</a>");
 
