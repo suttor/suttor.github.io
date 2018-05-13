@@ -49,27 +49,27 @@ myLayers = {
     ekt_sommer: L.tileLayer (
         "http://wmts.kartetirol.at/wmts/gdi_summer/GoogleMapsCompatible/normal/{z}/{x}/{y}.jpeg80",
         {  
-        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
+        attribution : "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol' >www.data.gv.at</a>"
     }
     ),
     ekt_winter:  L.tileLayer (
         "http://wmts.kartetirol.at/wmts/gdi_winter/GoogleMapsCompatible/normal/{z}/{x}/{y}.jpeg80",
         {  
-        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
+        attribution : "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol' >www.data.gv.at</a>"
     }
     ),
         ekt_ortho: L.tileLayer (
         "http://wmts.kartetirol.at/wmts/gdi_ortho/GoogleMapsCompatible/normal/{z}/{x}/{y}.jpeg80",
         {  
-        attribution : "Datenquelle: <a href='https://www.basemap.at' >Basemap.at</a>"
+        attribution : "Datenquelle: <a href='https://www.data.gv.at/katalog/dataset/land-tirol_elektronischekartetirol' >www.data.gv.at</a>"
     }
     )
 
 }; 
 
-myMap.addLayer(myLayers.geolandbasemap); // http://leafletjs.com/reference-1.3.0.html#map-addlayer
+myMap.addLayer(myLayers.geolandbasemap); 
 
-let myMapControl = L.control.layers({  // http://leafletjs.com/reference-1.3.0.html#control-layers-l-control-layers
+let myMapControl = L.control.layers({  
     "Openstreetmap" : myLayers.osm,
     "Basemap.at" : myLayers.geolandbasemap,
     "Elektronische Karte Tirol Sommer" : myLayers.ekt_sommer,
@@ -79,56 +79,34 @@ let myMapControl = L.control.layers({  // http://leafletjs.com/reference-1.3.0.h
 },{
     "Tirol Bike Trail" :  BikeGroup
 },
-{collapsed:false  // http://leafletjs.com/reference-1.3.0.html#control-layers-collapsed
+{collapsed:false  
 }
 );
 
-
-myMap.addControl (myMapControl); // http://leafletjs.com/reference-1.3.0.html#map-addcontrol
-
-
-myMap.setView([47.267,11.383], 11); // http://leafletjs.com/reference-1.3.0.html#map-setview
+myMap.addControl (myMapControl); 
 
 
 
-L.control.scale( // http://leafletjs.com/reference-1.3.0.html#control-scale-l-control-scale
-{imperial: false, // http://leafletjs.com/reference-1.3.0.html#control-scale-imperial
-maxWidth:200 // http://leafletjs.com/reference-1.3.0.html#control-scale-maxwidth
+L.control.scale( 
+{imperial: false, 
+maxWidth:200 
 }
-// metrische Angaben anzeigen sowie Position unten links ensprechen den defaults
+
 ).addTo(myMap); 
 
 
 
 
-async function addGeojson(url) {
-    
-    const response = await fetch(url);
-    
-    const wiendata = await response.json()
-    
-    const geojson = L.geoJSON(wiendata, {
-        style: function(feature) {
-            return {color: "#ff0000"};
-                    },
-            pointToLayer: function(geoJsonPoint, latlng){
-                return L.marker(latlng, {
-               icon: L.icon({
-                    iconUrl: "icon_grafik.png"
-                })
-           });
-       }
-    });
+let geojson = L.geoJSON(etappe30).addTo(BikeGroup);
+
+
+
     BikeGroup.addLayer(geojson);
     myMap.fitBounds(BikeGroup.getBounds())
-}
 
 
 
 
-const url = "https://data.wien.gv.at/daten/geo?service=WFS&request=GetFeature&version=1.1.0&srsName=EPSG:4326&outputFormat=json&typeName=ogdwien:SPAZIERPUNKTOGD,ogdwien:SPAZIERLINIEOGD"
-
-addGeojson(url);
 
 myMap.addLayer(BikeGroup);
 
@@ -149,4 +127,9 @@ myMap.addLayer(BikeGroup);
 
 // myMap.fitBounds(wienGroup.getBounds());
 
+
+
+L.marker([47.009528, 10.288781]).addTo(BikeGroup).bindPopup("...");
+
+L.marker([47.123801, 10.247665]).addTo(BikeGroup).bindPopup("...");
 
