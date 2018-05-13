@@ -88,15 +88,12 @@ let myMapControl = L.control.layers({
 myMap.addControl (myMapControl); 
 
 
-
 L.control.scale( 
 {imperial: false, 
 maxWidth:200 
 }
 
 ).addTo(myMap); 
-
-
 
 
 let geojson = L.geoJSON(etappe30).addTo(BikeGroup);
@@ -107,27 +104,7 @@ let geojson = L.geoJSON(etappe30).addTo(BikeGroup);
     myMap.fitBounds(BikeGroup.getBounds())
 
 
-
-
-
 myMap.addLayer(BikeGroup);
-
-
-
-
-
-
-
-// let geojson = L.geoJSON(spaziergang).addTo(wienGroup);
-// geojson.bindPopup(function(layer) {
-       
-//     const props = layer.feature.properties;
-//     const popupText = `<h1>${props.NAME}</h1>
-//     <p>${props.BEMERKUNG}</p>`;
-//     return popupText;
-//       });
-
-// myMap.fitBounds(wienGroup.getBounds());
 
 
 const start_icon = L.icon({
