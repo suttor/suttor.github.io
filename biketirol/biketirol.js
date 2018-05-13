@@ -128,8 +128,16 @@ myMap.addLayer(BikeGroup);
 // myMap.fitBounds(wienGroup.getBounds());
 
 
+const start_icon = L.icon({
+    iconUrl: 'start.png'
+      });
 
-L.marker([47.009528, 10.288781]).addTo(BikeGroup).bindPopup("...");
+const finish_icon = L.icon({
+     iconUrl: 'finish.png'
+      });
 
-L.marker([47.123801, 10.247665]).addTo(BikeGroup).bindPopup("...");
+
+L.marker([47.009528, 10.288781], {icon: finish_icon}).addTo(BikeGroup).bindPopup("...");
+
+L.marker([47.123801, 10.247665], {icon: start_icon}).addTo(BikeGroup).bindPopup("...");
 
