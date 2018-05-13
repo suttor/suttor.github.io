@@ -107,12 +107,15 @@ let geojson = L.geoJSON(etappe30).addTo(BikeGroup);
 myMap.addLayer(BikeGroup);
 
 
+
 const start_icon = L.icon({
-    iconUrl: 'start.png'
+    iconUrl: 'start.png',
+    iconAnchor: [15, 35]
       });
 
 const finish_icon = L.icon({
-     iconUrl: 'finish.png'
+     iconUrl: 'finish.png',
+     iconAnchor: [15, 35]
       });
 
 
@@ -120,3 +123,4 @@ L.marker([47.009528, 10.288781], {icon: start_icon}).addTo(BikeGroup_marker).bin
 
 L.marker([47.123801, 10.247665], {icon: finish_icon}).addTo(BikeGroup_marker).bindPopup("<a href='https://de.wikipedia.org/wiki/St._Anton_am_Arlberg'>St. Anton</a>");
 
+myMap.addLayer(BikeGroup_marker);
