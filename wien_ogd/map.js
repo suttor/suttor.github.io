@@ -67,10 +67,9 @@ L.control.scale({
 // asynchrone Funktion zum Laden eines GeoJSON Layers
 async function ladeGeojsonLayer(datenAttribute) {
     const response = await fetch(datenAttribute.json);
-
     const response_json = await response.json();
 
-    if (datenAttribute.icon)
+   
 
     // GeoJSON Geometrien hinzufügen und auf Ausschnitt zoomen
     const geojsonObjekt = L.geoJSON(response_json, {
@@ -91,6 +90,19 @@ async function ladeGeojsonLayer(datenAttribute) {
         layer.bindPopup(popup, {
             maxWidth : 600,
         });
+    },
+    pointToLayer : function (geoJsonPoint, latlng){
+        if (datenAttribute.icon) {
+            return L.marker(latlng, {
+                icon: L.icon ({
+                    iconUrl : datenAttribute.icon,
+                    iconAnchor: [16,32],
+                    popupAnchor:[0,-32],
+                })
+            })
+        } else {
+            return L.marker(latlng);
+        }
     }
     });
     geojsonGruppe.addLayer(geojsonObjekt);
