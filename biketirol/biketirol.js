@@ -29,7 +29,9 @@
 
 
 
-let myMap = L.map("map");    
+let myMap = L.map("map", {
+    fullscreenControl: true
+})
 const BikeGroup = L.featureGroup();
 const BikeGroup_marker = L.featureGroup();
 myLayers = {    
@@ -96,12 +98,12 @@ maxWidth:200
 ).addTo(myMap); 
 
 
-let geojson = L.geoJSON(etappe30).addTo(BikeGroup);
+// let geojson = L.geoJSON(etappe30).addTo(BikeGroup);
 
 
 
-    BikeGroup.addLayer(geojson);
-    myMap.fitBounds(BikeGroup.getBounds())
+ //  BikeGroup.addLayer(geojson);
+//    myMap.fitBounds(BikeGroup.getBounds())
 
 
 myMap.addLayer(BikeGroup);
@@ -126,3 +128,21 @@ L.marker([47.009528, 10.288781], {icon: start_icon}).addTo(BikeGroup_marker).bin
 L.marker([47.123801, 10.247665], {icon: finish_icon}).addTo(BikeGroup_marker).bindPopup("<a href='https://de.wikipedia.org/wiki/St._Anton_am_Arlberg'>St. Anton</a>");
 
 myMap.addLayer(BikeGroup_marker);
+
+// myMap.setView([47, 11], 13)
+
+let gpxTrack = new L.GPX("data/etappe30.gpx",{
+    async : true,
+}).addTo(myMap);
+gpxTrack.on("loaded", function(evt){
+    myMap.fitBounds(evt.target.getBounds());
+    console.log (evt.target.get_distance().toFixed(0))
+    console.log (evt.target.get_elevation_min().toFixed(0))
+    console.log (evt.target.get_elevation_max().toFixed(0))
+    console.log (evt.target.get_elevation_gain().toFixed(0))
+    console.log (evt.target.get_elevation_loss().toFixed(0))
+    let laenge = evt.target.get_distance().toFixed(0)
+    document.getElementById("laenge").innerHTML = laenge;
+    });
+
+    

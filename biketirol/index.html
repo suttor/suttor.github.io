@@ -12,7 +12,13 @@
     <script src="../js/leaflet/leaflet.js"></script>
 
     <link rel="stylesheet" href="styles.css" />
-    <script defer src="data/etappe30.geojson.js"></script>
+
+    <link href='fullscreen/dist/leaflet.fullscreen.css' rel='stylesheet' />
+    <script src='fullscreen/dist/Leaflet.fullscreen.min.js'></script>
+
+       <!-- <script defer src="data/etappe30.geojson.js"></script> -->
+
+        <script src='gpx/gpx.js'></script>
     <script defer src="biketirol.js"></script>
     
 </head>
@@ -35,9 +41,11 @@
 
     
     <div class="article">
-        <h1>Etappe 30 von Ischl nach St.Anton</h1><!-- TODO: anpassen DONE -->
+        <h1>Etappe 30 von Ischgl nach St.Anton</h1><!-- TODO: anpassen DONE -->
 
         <p>Spaß und Abwechslung ist auf dieser Etappe garantiert – dafür müssen sich Mountainbiker aber auch anstrengen. Die als schwer eingestufte Etappe führt über 42 Kilometer. Von Asphalt über Schotter und Pfade bis hin zu Schiebestrecken ist alles dabei. Dazu gibt es eine herrliche Aussicht auf die Dreitausender der Samnaun-Gruppe und auf die Verwallgruppe.</p>
+
+        <p>Tourdaten: Gesamtlänge <span id="laenge"></span>m</p>
 
             <div id="map"></div>
 
