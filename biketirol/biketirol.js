@@ -136,13 +136,25 @@ let gpxTrack = new L.GPX("data/etappe30.gpx",{
 }).addTo(myMap);
 gpxTrack.on("loaded", function(evt){
     myMap.fitBounds(evt.target.getBounds());
+
     console.log (evt.target.get_distance().toFixed(0))
     console.log (evt.target.get_elevation_min().toFixed(0))
     console.log (evt.target.get_elevation_max().toFixed(0))
     console.log (evt.target.get_elevation_gain().toFixed(0))
     console.log (evt.target.get_elevation_loss().toFixed(0))
+
     let laenge = evt.target.get_distance().toFixed(0)
+    let tiefsterpunkt = evt.target.get_elevation_min().toFixed(0)
+    let hoechsterpunkt = evt.target.get_elevation_max().toFixed(0)
+    let aufstieg = evt.target.get_elevation_gain().toFixed(0)
+    let abstieg = evt.target.get_elevation_loss().toFixed(0)
+
     document.getElementById("laenge").innerHTML = laenge;
+    document.getElementById("tiefsterpunkt").innerHTML = tiefsterpunkt;
+    document.getElementById("hoechsterpunkt").innerHTML = hoechsterpunkt;
+    document.getElementById("aufstieg").innerHTML = aufstieg;
+    document.getElementById("abstieg").innerHTML = abstieg;
+    
     });
 
     
