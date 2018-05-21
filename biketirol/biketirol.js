@@ -111,13 +111,13 @@ myMap.addLayer(BikeGroup);
 
 
 const start_icon = L.icon({
-    iconUrl: 'start.png',
+    iconUrl: 'images/start.png',
     iconAnchor: [15, 35],
     popupAnchor: [1, -30]
       });
 
 const finish_icon = L.icon({
-     iconUrl: 'finish.png',
+     iconUrl: 'images/finish.png',
      iconAnchor: [15, 35],
      popupAnchor: [1, -30]
       });
