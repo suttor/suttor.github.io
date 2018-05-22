@@ -98,15 +98,15 @@ maxWidth:200
 ).addTo(myMap); 
 
 
-// let geojson = L.geoJSON(etappe30).addTo(BikeGroup);
+ // let geojson = L.geoJSON(etappe30).addTo(BikeGroup);
 
 
 
  //  BikeGroup.addLayer(geojson);
-//    myMap.fitBounds(BikeGroup.getBounds())
+ //  myMap.fitBounds(BikeGroup.getBounds())
 
 
-myMap.addLayer(BikeGroup);
+//  myMap.addLayer(BikeGroup);
 
 
 
@@ -133,15 +133,15 @@ myMap.addLayer(BikeGroup_marker);
 
 let gpxTrack = new L.GPX("data/etappe30.gpx",{
     async : true,
-}).addTo(myMap);
+}).addTo(BikeGroup);
 gpxTrack.on("loaded", function(evt){
     myMap.fitBounds(evt.target.getBounds());
 
-    console.log (evt.target.get_distance().toFixed(0))
-    console.log (evt.target.get_elevation_min().toFixed(0))
-    console.log (evt.target.get_elevation_max().toFixed(0))
-    console.log (evt.target.get_elevation_gain().toFixed(0))
-    console.log (evt.target.get_elevation_loss().toFixed(0))
+    // console.log (evt.target.get_distance().toFixed(0))
+    // console.log (evt.target.get_elevation_min().toFixed(0))
+    // console.log (evt.target.get_elevation_max().toFixed(0))
+    // console.log (evt.target.get_elevation_gain().toFixed(0))
+    // console.log (evt.target.get_elevation_loss().toFixed(0))
 
     let laenge = evt.target.get_distance().toFixed(0)
     let tiefsterpunkt = evt.target.get_elevation_min().toFixed(0)
