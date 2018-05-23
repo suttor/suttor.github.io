@@ -34,6 +34,8 @@ let myMap = L.map("map", {
 })
 const BikeGroup = L.featureGroup();
 const BikeGroup_marker = L.featureGroup();
+let overlaySteigung = L.featureGroup().addTo(myMap);
+
 myLayers = {    
     osm : L.tileLayer ( 
         "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -72,6 +74,12 @@ myLayers = {
 
 myMap.addLayer(myLayers.geolandbasemap); 
 
+
+
+
+
+
+
 let myMapControl = L.control.layers({  
     "Openstreetmap" : myLayers.osm,
     "Basemap.at" : myLayers.geolandbasemap,
@@ -81,10 +89,11 @@ let myMapControl = L.control.layers({
     
 },{
     "Route" :  BikeGroup, 
-    "Start- & Endpunkt" :  BikeGroup_marker
+    "Start- & Endpunkt" :  BikeGroup_marker,
+    "Steigungslinie" : overlaySteigung,
+  
 },
-{collapsed:false  
-}
+ // {collapsed:false }
 );
 
 myMap.addControl (myMapControl); 
@@ -131,17 +140,26 @@ myMap.addLayer(BikeGroup_marker);
 
 // myMap.setView([47, 11], 13)
 
+
+//Höhenprofil control hinzufüegen
+
+let el = L.control.elevation({
+    position: "bottomright",
+    collapsed: true
+    
+
+}).addTo(myMap);
+
+        attr ='Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash; Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>'
+        service = new L.TileLayer("data/etappe30.gpx", {subdomains:"1234",attribution: attr});
+
 let gpxTrack = new L.GPX("data/etappe30.gpx",{
     async : true,
 }).addTo(BikeGroup);
 gpxTrack.on("loaded", function(evt){
     myMap.fitBounds(evt.target.getBounds());
 
-    // console.log (evt.target.get_distance().toFixed(0))
-    // console.log (evt.target.get_elevation_min().toFixed(0))
-    // console.log (evt.target.get_elevation_max().toFixed(0))
-    // console.log (evt.target.get_elevation_gain().toFixed(0))
-    // console.log (evt.target.get_elevation_loss().toFixed(0))
+
 
     let laenge = evt.target.get_distance().toFixed(0)
     let tiefsterpunkt = evt.target.get_elevation_min().toFixed(0)
@@ -157,4 +175,69 @@ gpxTrack.on("loaded", function(evt){
     
     });
 
+    gpxTrack.on('loaded', function(evt) {
+        myMap.fitBounds(evt.target.getBounds());
+});
+gpxTrack.on("addline",function(evt){
+  el.addData(evt.line);
+//  console.log(evt.line);
+//  console.log(evt.line.getLatLngs());
+//  console.log(evt.line.getLatLngs()[0]);
+//  console.log(evt.line.getLatLngs()[0].lat);
+//  console.log(evt.line.getLatLngs()[0].lng);
+// console.log(evt.line.getLatLngs()[0].meta);
+ // console.log(evt.line.getLatLngs()[0].meta.ele);
+
+// alle Segmente der Steigungslinie hinzufügen
+    let gpxLinie = evt.line.getLatLngs();
+    for (let i = 1; i < gpxLinie.length; i++) {
+        let p1 = gpxLinie[i-1];
+        let p2 = gpxLinie[i];
+        // console.log(p1.lat, p1.lng,p2.lat,p2.lng);
+
+        let dist = myMap.distance(
+            [p2.lat,p2.lng],
+            [p1.lat,p1.lng],
+        );
+
+        // Höhenunterschied berechnen
+        let delta = p2.meta.ele - p1.meta.ele;  
+
+   // Steigung in % berechnen
+
+     //   let proz = 0;
+     // if (dist > 0) {
+     //   proz = (delta / dist * 100.0).toFixed(1);
+     // }
+
+        let proz = (dist > 0) ? (delta / dist * 100.0).toFixed(1) : 0;
+
+        console.log(p1.lat, p1.lng,p2.lat,p2.lng,proz);
+
+        let farbe =
+                    proz > 10  ? "#a50f15" :
+                    proz > 6   ? "#de2d26" :
+                    proz > 2   ? "#fb6a4a" :
+                    proz > 0   ? "#edf8e9" :
+                    proz > -2  ? "#a1d99b" :
+                    proz > -6  ? "#74c476" :
+                    proz > -10 ? "#31a354" :
+                                 "#006d2c" ;
+
+        let segment = L.polyline(
+            [
+            [p2.lat,p2.lng],
+            [p1.lat,p1.lng],
+            ],{
+            color: farbe,
+            weight: 5
+            }
+    ).addTo(overlaySteigung);
+    }
+
+    
+
+});
+gpxTrack.addTo(myMap);
+myMap.addLayer(service);
     
